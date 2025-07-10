@@ -32,6 +32,47 @@ app.get("/api/jobs", async (req, res) => {
   }
 });
 
+app.put("/api/jobs/:id", async (req, res) => {
+  try {
+    const job = await Jobs.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!job) {
+      return res.status(404).send("Job not found");
+    }
+    res.send(job);
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/api/jobs/:id", async (req, res) => {
+  try {
+    const job = await Jobs.findById(req.params.id);
+    if (!job) {
+      return res.status(404).send("Job not found");
+    }
+    res.send(job);
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.delete("/api/jobs/:id", async (req, res) => {
+  try {
+    const job = await Jobs.findByIdAndDelete(req.params.id);
+    if (!job) {
+      return res.status(404).send("Job not found");
+    }
+    res.send("Job deleted successfully");
+  } catch (error) {
+    console.error("Error deleting job:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.listen(PORT, async () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   await connectToDatabase();
