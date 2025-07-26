@@ -8,9 +8,7 @@ const JobListings = ({ isHome = false }) => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const api_url = isHome
-        ? "/api/jobs?_limit=3"
-        : "/api/jobs";
+      const api_url = isHome ? "/api/jobs?_limit=3" : "/api/jobs";
       try {
         const response = await fetch(api_url);
         const data = await response.json();
@@ -35,10 +33,10 @@ const JobListings = ({ isHome = false }) => {
           ) : (
             <>
               {jobs.map(
-                ({ id, type, title, location, salary, description }) => (
+                ({ _id, type, title, location, salary, description }) => (
                   <JobListing
-                    key={id}
-                    id={id}
+                    key={_id}
+                    id={_id}
                     type={type}
                     title={title}
                     location={location}

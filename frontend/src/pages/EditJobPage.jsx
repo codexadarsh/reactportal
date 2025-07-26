@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, useLoaderData, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const EditJobPage = ({ updateJobSubmit }) => {
+const EditJobPage = () => {
   const job = useLoaderData();
   const [title, setTitle] = useState(job.title);
   const [type, setType] = useState(job.type);
@@ -19,7 +19,7 @@ const EditJobPage = ({ updateJobSubmit }) => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
 
     const updatedJob = {
@@ -37,11 +37,21 @@ const EditJobPage = ({ updateJobSubmit }) => {
       },
     };
 
-    updateJobSubmit(updatedJob);
+    try {
+      const response = await fetch(`/api/jobs/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedJob),
+      });
 
-    toast.success("Job Updated Successfully");
+      if (!response.ok) throw new Error("Failed to update job");
 
-    navigate(`/jobs/${id}`);
+      toast.success("Job updated successfully!");
+      navigate("/jobs");
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong while updating the job.");
+    }
   };
 
   return (
