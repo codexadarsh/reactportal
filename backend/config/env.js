@@ -1,4 +1,6 @@
-import { config } from "dotenv";
+import dotenv from "dotenv";
+
+const { config } = dotenv;
 
 config({ path: `.env.${process.env.NODE_ENV || "development"}.local` });
 
