@@ -11,6 +11,11 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
+app.use(async (req, res, next) => {
+  await connectToDatabase();
+  next();
+});
+
 app.post("/api/jobs", async (req, res) => {
   try {
     const job = new Jobs(req.body);
