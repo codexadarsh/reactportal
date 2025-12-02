@@ -33,7 +33,7 @@ const AddJobPage = () => {
     };
 
     try {
-      const response = await fetch("/api/jobs", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/jobs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newJob),

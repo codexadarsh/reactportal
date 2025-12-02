@@ -12,10 +12,13 @@ const JobPage = () => {
 
     if (!confirm) return;
     try {
-      const response = await fetch(`/api/jobs/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/jobs/${id}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to delete job");
 
@@ -115,7 +118,9 @@ const JobPage = () => {
 };
 
 const jobLoader = async ({ params }) => {
-  const response = await fetch(`/api/jobs/${params.id}`);
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL}/jobs/${params.id}`
+  );
   const data = await response.json();
   return data;
 };

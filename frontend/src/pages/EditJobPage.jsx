@@ -38,11 +38,14 @@ const EditJobPage = () => {
     };
 
     try {
-      const response = await fetch(`/api/jobs/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedJob),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/jobs/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedJob),
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to update job");
 

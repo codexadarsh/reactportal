@@ -19,7 +19,7 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.post("/api/jobs", async (req, res) => {
+app.post("/jobs", async (req, res) => {
   try {
     const job = new Jobs(req.body);
     await job.save();
@@ -30,7 +30,7 @@ app.post("/api/jobs", async (req, res) => {
   }
 });
 
-app.get("/api/jobs", async (req, res) => {
+app.get("/jobs", async (req, res) => {
   try {
     const jobs = await Jobs.find();
     res.send(jobs);
@@ -40,7 +40,7 @@ app.get("/api/jobs", async (req, res) => {
   }
 });
 
-app.put("/api/jobs/:id", async (req, res) => {
+app.put("/jobs/:id", async (req, res) => {
   try {
     const job = await Jobs.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -55,7 +55,7 @@ app.put("/api/jobs/:id", async (req, res) => {
   }
 });
 
-app.get("/api/jobs/:id", async (req, res) => {
+app.get("/jobs/:id", async (req, res) => {
   try {
     const job = await Jobs.findById(req.params.id);
     if (!job) {
@@ -68,7 +68,7 @@ app.get("/api/jobs/:id", async (req, res) => {
   }
 });
 
-app.delete("/api/jobs/:id", async (req, res) => {
+app.delete("/jobs/:id", async (req, res) => {
   try {
     const job = await Jobs.findByIdAndDelete(req.params.id);
     if (!job) {
